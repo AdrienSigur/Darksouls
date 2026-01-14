@@ -6,43 +6,55 @@ mod stats ;
 
 use entities::{Personnage, Monstre};
 use types::Role;
-
+use std::io;
 
 
 
 fn main() {
 
-    let noms_monstres = vec!["Slime", "Squelette", "Chevalier Noir"];
-    let nom_choisi = noms_monstres.choose(&mut rng).unwrap();
-    let mut ennemi = Monstre::new(nom_choisi, force_aleatoire, vig_aleatoire, luck_aleatoire);
+    println!("Choose your undead name : \n");
 
-    let mut solaire : Personnage = Personnage::new("solaire" , Role::Chevalier );
-    let mut slime : Monstre = Monstre::new("slime" , 5 , 5 , 5 );
- 
+    let mut nom_input = String::new();
+    std::io::stdin().read_line(&mut nom_input).expect("Error this name is not avaible");
+
+    println!("\n Choose your class between this list \n");
+
+    let mut class = String::new();
+    std::io::stdin().read_line(&mut class).expect("Error this name is not avaible");
+    println!("");
+
    
 
-    solaire.fiche();
+    let roll = match class.trim().to_lowercase().as_str() {
+        "chevalier" => Role::Chevalier,
+        _ => Role::Mendiant
+    };
 
-    slime.attackplayer(&mut solaire);
+    println!("Vous avez choose the class {:?} . You gonna enter in the world of lordran  \n" , &roll );
 
-    solaire.attack(&mut slime);
+    let mut user : Personnage = Personnage::new(nom_input , roll);
 
-    solaire.estus();
-
-    solaire.attack(&mut slime);
-
-    solaire.fiche();
-
+    println!("--- Welcome to lordran realm --- ");
 
     loop {
-    println!("--- Une nouvelle salle s'offre à vous ---");
-
-
-    // 1. Générer un monstre au hasard
-    // 2. Lancer le combat
-    // 3. Demander : "Continuer ou Quitter ?"
     
-    if choix == "quitter" || solaire.hp <= 0 {
-        break; 
+    
+    let mut choix = String::new();
+
+    
+    io::stdin()
+        .read_line(&mut choix) 
+        .expect("Échec de la lecture"); 
+
+    let choix = choix.trim();
+    
+    match choix {
+        "Fiche" => user.fiche(),
+        "continuer" => println!("hello world"),
+        "quitter"  => break ,
+        _ => println!("choose something else")
+    }
+    
+
     }
 }

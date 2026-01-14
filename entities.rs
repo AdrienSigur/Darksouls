@@ -56,12 +56,13 @@ pub struct Personnage {
 
 impl Personnage {
 
-    pub fn new(nom : &str , classe : Role) -> Personnage {
+    pub fn new(nom : String , classe : Role) -> Personnage {
 
         let arme = classe.Weaponclass();
         let stats = classe.basicStats();
-        let hpmax = classe.stats.hp_max();    
 
+        let hpmax = stats.Vig * 10 ;
+        
         Personnage {
             hp : hpmax ,
             nom : nom.to_string() , 
@@ -87,13 +88,16 @@ impl Personnage {
 
         // On appelle la logique de Stats depuis ici
         let noms = Stats::StrStats();
-        let valeurs = Stats::IntStats();
+        let valeurs = self.stats.IntStats();
 
         for (n, v) in noms.iter().zip(valeurs.iter()) {
             println!("{:<12} : {}", n, v);
         }
         println!("===============================");
     }
+  pub fn hp_max(&self) -> i32{
+      self.stats.Vig * 10
+  }
     
 
    pub fn attack(&mut self, cible: &mut Monstre) {
@@ -135,10 +139,7 @@ impl Personnage {
 
     
 
-    pub fn hp_max(&self) -> i32 {
-        self.stats.Vig * 10
-    }
-
+    
     pub fn checklevelup(&mut self){
         
        if self.xp >= self.niveau * 10 {
