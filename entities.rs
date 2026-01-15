@@ -2,6 +2,7 @@ use crate::stats::Stats;
 use crate::Role;
 use crate::types::Weapon;  
 use rand::prelude::*;
+use super::utils::Color::* ;
 
 pub struct Monstre {
     nom: String,
@@ -77,30 +78,32 @@ impl Personnage {
     
 
   pub  fn fiche(&self) {
-        println!("===============================");
+        color::green.colortext("===============================");
         println!("NOM : {}", self.nom);
         println!("CLASSE : {:?}", self.classe);
         println!("SANTÉ : {} HP", self.hp);
         println!("ARME : {:?}", self.arme);
         println!("DÉGÂTS ARME : {}", self.arme.weapondamage());
         println!("NIVEAU : {:?}", self.niveau);
-        println!("-------------------------------");
+        color::green.colortext("-------------------------------");
 
         // On appelle la logique de Stats depuis ici
         let noms = Stats::StrStats();
         let valeurs = self.stats.IntStats();
 
         for (n, v) in noms.iter().zip(valeurs.iter()) {
-            println!("{:<12} : {}", n, v);
+            print!("{:<12} : ", n);
+            color::red.colortext(&v.to_string());
         }
-        println!("===============================");
+        color::green.colortext("===============================");
     }
-  pub fn hp_max(&self) -> i32{
+
+    pub fn hp_max(&self) -> i32{
       self.stats.Vig * 10
-  }
+    }
     
 
-   pub fn attack(&mut self, cible: &mut Monstre) {
+    pub fn attack(&mut self, cible: &mut Monstre) {
 
         let hpmax = cible.stats.Vig * 5 ;
         let degats = self.stats.Force + self.arme.weapondamage();
@@ -121,28 +124,64 @@ impl Personnage {
 
         }
     
-    
     }
+
     
     pub fn estus(&mut self){
 
         let estus = 20 ;
-        let hpmax = self.stats.Vig * 10 ;
+        let hpmax = self.hp_max() ;
 
         if self.hp + estus > hpmax {
-            self.hp = hpmax
+ 
+            self.hp = hpmax;
+            
+            self.afficher_hud();    
         }else{
-            self.hp += estus
+            self.hp += estus;
+                
+            self.afficher_hud();
+
         }
-        println!("{} boit fiole d'estus et régénérer Vie actuelle {}/{}" , self.nom , self.hp , hpmax );
+         
+       
     }
 
-    
 
-    
+    pub fn afficher_hud(&self){
+        
+        let taille_barre = 20;
+        let ratio = self.hp as f32 / self.hp_max() as f32;
+        let blocs_pleins = (ratio * taille_barre as f32) as usize;
+
+        let couleur_barre = if ratio > 0.6 {
+            color::green
+        } else if ratio > 0.2 {
+            color::yellow
+        } else {
+            color::red
+        };
+
+    // On construit la chaîne de blocs
+        let mut barre_visuelle = String::new();
+        for i in 0..taille_barre {
+            if i < blocs_pleins {
+                barre_visuelle.push('█');
+            } else {
+            barre_visuelle.push('░');
+            }
+        }
+        
+
+        print!("HP :  ");
+        println!("{:?} {}/{} HP", couleur_barre.colortext(&barre_visuelle), self.hp, self.hp_max());
+    }
+
+
+     
     pub fn checklevelup(&mut self){
         
-       if self.xp >= self.niveau * 10 {
+        if self.xp >= self.niveau * 10 {
             self.niveau += 1;
             self.xp -= self.niveau * 10;
             println!("✨ LEVEL UP ! {} est maintenant niveau {} !", self.nom, self.niveau);
@@ -154,7 +193,11 @@ impl Personnage {
             self.hp += 30  ;
 
             println!("Tes stats augmentent ! Force: {}, Vie: {}", self.stats.Force, self.hp);
+       }else{
+            
        }
+
+
     }
 
 
