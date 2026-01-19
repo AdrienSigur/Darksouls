@@ -1,8 +1,9 @@
 
 use crate::stats::Stats;
 use crate::entities::player::Personnage;
+use crate::Asciart::Art_mobs;
 use rand::Rng;
-
+use rand::seq::SliceRandom;
 
 pub struct Monstre {
     pub nom: String,
@@ -14,7 +15,7 @@ pub struct Monstre {
     art: &'static str
 }
 
-impl Monstre {
+impl  Monstre {
     pub fn new(nom: &str, force: i32, vig: i32 , luck : i32 , asci : &'static str) -> Monstre {
 
         
@@ -44,4 +45,43 @@ impl Monstre {
         
         
     }
+
+    pub fn monstergenerate() -> Monstre {
+
+        let mut rng = rand::thread_rng();
+
+         let mut MonsterList : Vec<Monstre> = vec![ 
+
+            Monstre::new(
+                "Slime",
+                2,
+                3,
+                5,
+                Art_mobs::SLIME, // Virgule ici même si c'est le dernier
+            ),
+
+            Monstre::new(
+                "Skeletton",
+                3 ,
+                4 ,
+                6 ,
+                Art_mobs::SKELETON
+            ),
+
+            Monstre::new(
+                "Undead",
+                3 ,
+                4,
+                5,
+                Art_mobs::UNDEAD
+
+            )
+        ];
+         let index = rng.gen_range(0..MonsterList.len());
+
+         MonsterList.remove(index)
+
+
+    }
+
 }
