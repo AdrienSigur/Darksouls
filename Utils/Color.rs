@@ -1,21 +1,23 @@
 
 #[derive(Debug)]
-pub enum color {
-   red ,
-   green ,
-   blue,
-   yellow
+pub enum Color {
+   Red ,
+   Green ,
+   Blue,
+   Yellow,
+   White
 }
 
 
-impl color {
+impl Color {
 
    pub fn colortext(&self , text : &str) {
         let color = match self {
-            color::red => "\x1b[0;31m",
-            color::green => "\x1b[0;32m",
-            color::blue => "\x1b[0;34m",
-            color::yellow => "\x1b[1;33m"
+            Color::Red => "\x1b[0;31m",
+            Color::Green => "\x1b[0;32m",
+            Color::Blue => "\x1b[0;34m",
+            Color::Yellow => "\x1b[1;33m",
+            Color::White => "\x1b[0;37m"
         };
 
         let line = format!("{}{}\x1b[0m", color , text);

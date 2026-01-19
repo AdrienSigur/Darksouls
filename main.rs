@@ -1,23 +1,32 @@
 mod entities;
 mod types;
 mod stats ;
-mod utils ;
+mod Utils ;
+mod Asciart;
 
-use entities::{Personnage, Monstre};
+use std::io::Write;
+use Asciart::Art_ui;
+use entities::*;
 use types::Role;
+use crate::player::Personnage;
+use crate::monster::Monstre;
 use std::io;
-use utils::Color::color;
+use Utils::Color::*;
 
 
 fn main() {
 
-    color::blue.colortext("Choose your undead name : \n");
+    Color::Blue.colortext(Art_ui::DARKSOULS);
+
+    Color::Blue.colortext("Choose your undead name : \n");
+
+    // color::red.colortext(Art_ui::YOUDIED);
 
     
     let mut nom_input = String::new();
     std::io::stdin().read_line(&mut nom_input).expect("Error this name is not avaible");
 
-    color::blue.colortext("\n Choose your class between this list \n");
+    Color::Blue.colortext("\n Choose your class between this list \n");
 
     let mut class = String::new();
     std::io::stdin().read_line(&mut class).expect("Error this name is not available");
@@ -28,13 +37,17 @@ fn main() {
         _ => Role::Mendiant
     };
 
-    color::blue.colortext(&format!("Vous avez choose the class {:?} . You gonna enter in the world of lordran  \n" , &roll) );
+    Color::Blue.colortext(&format!("Vous avez choose the class {:?} . You gonna enter in the world of lordran  \n" , &roll) );
 
     let mut user : Personnage = Personnage::new(nom_input , roll);
 
-    color::green.colortext("--- Welcome to lordran realm ---");
+    Color::Green.colortext("--- Welcome to lordran realm ---");
 
     loop {
+
+    print!(" > ");   
+
+    io::stdout().flush().expect("Failed to flush stdout");
     
     
     let mut choix = String::new();
