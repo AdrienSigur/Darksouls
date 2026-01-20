@@ -67,4 +67,43 @@ impl Weapon {
     }
 }
 
+pub struct armor {
+    durability : i32 ,
+    weight : i32 ,
+    material : &str 
+}
+
+
+pub enum Armorset {
+    lightarmor ,
+    midarmor ,
+    heavyarmor
+}
+
+
+
+impl Armor {
+
+
+    fn new() {
+        Armor {
+            durability : 5 ,
+            weight : 5 , 
+            material "adamantium"
+        }
+    }
+
+    fn random_armor(&self){
+
+    
+
+        let prefixes = vec!["Ancien", "Maudit", "Sacré", "Sombre", "Oublié"];
+        let types = vec!["Plastron", "Heaume", "Gantelets", "Jambières"];
+        let suffixes = vec!["de l'Abysse", "du Chevalier", "de Fer", "de Sang"];
+
+
+
+
+   }
+}
 

@@ -59,6 +59,9 @@ fn main() {
     
     let mut choix = String::new();
 
+
+
+   
     
     io::stdin()
         .read_line(&mut choix) 
@@ -74,7 +77,11 @@ fn main() {
         "quitter"  => break ,
         "estus" => user.estus(),
         "help" => println!("hello worldu"),
-        "random" => ennemi = Some(monster::monstergenerate()), 
+        "random" => { let m = Monstre::monstergenerate();
+                println!("Un {} apparaît !", &m.nom);
+                Color::Blue.colortext(m.art);
+        },
+        "feu" => println!("feu"),
         _ => println!("choose something else")
     }
     

@@ -5,30 +5,30 @@ use crate::Asciart::Art_mobs;
 use rand::Rng;
 use rand::seq::SliceRandom;
 
-pub struct Monstre {
+pub struct Monstre<'a> {
     pub nom: String,
     pub hp: i32,
     pub stats: Stats, // On réutilise la même branche !
     pub degats_base: i32,
     pub status : bool ,
     pub xp_give : i32,
-    art: &'static str
+    pub art: &'a str
 }
 
-impl  Monstre {
-    pub fn new(nom: &str, force: i32, vig: i32 , luck : i32 , asci : &'static str) -> Monstre {
+impl  Monstre<'_>  {
+    pub fn new<'a>(nom: &str, force: i32, vig: i32 , luck : i32 , asci : &'a str) -> Monstre<'a> {
 
         
         let xp_genere = Monstre::randxp(luck);
 
         Monstre {
-            nom: nom.to_string(),
-            hp: vig * 5, // Un monstre est peut-être un peu moins costaud ?
-            stats: Stats { Vig: vig, Force: force, End: 5, Int: 1, Dex: 5, Luck: luck },
-            degats_base: force,
-            status : true ,
-            xp_give : xp_genere,
-            art : asci
+             nom: nom.to_string(),
+             hp: vig * 5, // Un monstre est peut-être un peu moins costaud ?
+             stats: Stats { Vig: vig, Force: force, End: 5, Int: 1, Dex: 5, Luck: luck },
+             degats_base: force,
+             status : true ,
+             xp_give : xp_genere,
+             art : asci
         }
     }
 
@@ -46,7 +46,7 @@ impl  Monstre {
         
     }
 
-    pub fn monstergenerate() -> Monstre {
+    pub fn monstergenerate() -> Monstre<'static> {
 
         let mut rng = rand::thread_rng();
 
