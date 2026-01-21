@@ -4,19 +4,21 @@ use crate::entities::player::Personnage;
 use crate::Asciart::Art_mobs;
 use rand::Rng;
 use rand::seq::SliceRandom;
+use crate::Color;
 
-pub struct Monstre<'a> {
+
+pub struct Monstre {
     pub nom: String,
     pub hp: i32,
     pub stats: Stats, // On réutilise la même branche !
     pub degats_base: i32,
     pub status : bool ,
     pub xp_give : i32,
-    pub art: &'a str
+    pub art: String
 }
 
-impl  Monstre<'_>  {
-    pub fn new<'a>(nom: &str, force: i32, vig: i32 , luck : i32 , asci : &'a str) -> Monstre<'a> {
+impl  Monstre  {
+    pub fn new(nom: &str, force: i32, vig: i32 , luck : i32 , asci : &str) -> Monstre {
 
         
         let xp_genere = Monstre::randxp(luck);
@@ -28,14 +30,19 @@ impl  Monstre<'_>  {
              degats_base: force,
              status : true ,
              xp_give : xp_genere,
-             art : asci
+             art : asci.to_string()
         }
     }
 
-    pub fn attackplayer(&self, cible: &mut Personnage) {
-        let degats = self.stats.Force * 3 ; 
-        cible.hp -= degats * 2 ;
-        println!("{} attaque {} et inflige {} dégâts !", self.nom, cible.nom, degats);
+    pub fn attackplayer(&self, cible: &mut Personnage) ->i32{
+        let degats = self.stats.Force * 3 ;
+
+        let damagetaken : i32 = (self.stats.Force * 3) * 2;
+
+        cible.hp -= damagetaken ;
+        
+        damagetaken
+        
     }
 
     pub fn randxp(luck : i32 ) -> i32{
@@ -46,7 +53,7 @@ impl  Monstre<'_>  {
         
     }
 
-    pub fn monstergenerate() -> Monstre<'static> {
+    pub fn monstergenerate() -> Monstre {
 
         let mut rng = rand::thread_rng();
 
@@ -82,6 +89,19 @@ impl  Monstre<'_>  {
          MonsterList.remove(index)
 
 
+    }
+
+
+    pub fn createmonster() -> Monstre{
+        let monster = Monstre::monstergenerate();
+
+        let formatage = format!("THIS MONSTER APPEAR {} IN THIS ROOM" , &monster.nom ); 
+
+        Color::Red.colortext(&formatage);
+        
+        Color::Blue.colortext(&monster.art);
+
+        monster 
     }
 
 }

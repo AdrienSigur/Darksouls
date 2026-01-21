@@ -7,7 +7,7 @@ use rand::Rng;
 use crate::entities::monster::Monstre;
 use crate::Color;
 
-
+#[derive(Clone)]
 pub struct Personnage {
     pub hp : i32 , 
     pub nom : String ,
@@ -68,10 +68,10 @@ impl Personnage {
     }
     
 
-    pub fn attack(&mut self, cible: &mut Monstre) {
+    pub fn attack(&mut self, cible: &mut Monstre) -> i32 {
 
         let hpmax = cible.stats.Vig * 5 ;
-        let degats = self.stats.Force + self.arme.weapondamage();
+        let degats = self.stats.Force + self.arme.weapondamage() * 2 ;
         cible.hp -= degats ;
 
         if cible.hp < 0 {
@@ -83,11 +83,9 @@ impl Personnage {
             println!("{} récupère {} xp de {} " , self.nom , cible.xp_give , cible.nom);
 
             self.checklevelup();
-        }else{
-            println!("{} attaque {} et inflige {} dégâts !", self.nom, cible.nom, degats);
-            println!("Vie restante de {} est de {}/{}", cible.nom , cible.hp , hpmax);
-
         }
+
+        degats
     
     }
 

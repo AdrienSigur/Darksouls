@@ -1,4 +1,5 @@
 #[derive(Debug)]
+#[derive(Clone)]
 pub struct Stats {
     pub Vig : i32 ,
     pub Force : i32 ,

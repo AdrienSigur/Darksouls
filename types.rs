@@ -2,7 +2,7 @@
 use crate::stats::Stats;
 
 #[derive(Debug)]
-
+#[derive(Clone)]
 pub enum Role {
     Chevalier ,
     Clerc ,
@@ -13,6 +13,12 @@ pub enum Role {
 }
 
 impl Role{
+
+     fn rolelist() ->  Vec<String>{
+
+        vec!["Chevalier".to_string(), "Necromancien".to_string(), "Clerc".to_string(), "Mendiant".to_string(), "Prisonnier".to_string(), "Pyromancien".to_string()]
+
+    }
 
     pub fn basicStats(&self) -> Stats {
 
@@ -39,10 +45,21 @@ impl Role{
         }
     }
 
+    pub fn fiche(){
+
+        let list = Role::rolelist();
+
+        for l in list {
+            println!("======= : {}" , l);
+        }
+
+    }
+
     
 }
 
 #[derive(Debug)]
+#[derive(Clone)]
 pub enum Weapon {
     Epee ,
     Arc ,
@@ -67,43 +84,36 @@ impl Weapon {
     }
 }
 
-pub struct armor {
+pub struct Armor {
     durability : i32 ,
     weight : i32 ,
-    material : &str 
+    material : String  ,
+    ApparelType: Armorset 
 }
 
 
-pub enum Armorset {
+pub enum Armorset  {
     lightarmor ,
     midarmor ,
     heavyarmor
 }
 
-
-
 impl Armor {
 
-
-    fn new() {
+    fn new(material : &str , armor : Armorset) -> Armor {
         Armor {
             durability : 5 ,
             weight : 5 , 
-            material "adamantium"
+            material : material.to_string() ,
+            ApparelType : armor
+
         }
     }
 
     fn random_armor(&self){
-
-    
-
         let prefixes = vec!["Ancien", "Maudit", "Sacré", "Sombre", "Oublié"];
         let types = vec!["Plastron", "Heaume", "Gantelets", "Jambières"];
         let suffixes = vec!["de l'Abysse", "du Chevalier", "de Fer", "de Sang"];
-
-
-
-
    }
 }
 
