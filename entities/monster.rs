@@ -25,7 +25,7 @@ impl  Monstre  {
 
         Monstre {
              nom: nom.to_string(),
-             hp: vig * 5, // Un monstre est peut-être un peu moins costaud ?
+             hp: vig * 15, // Un monstre est peut-être un peu moins costaud ?
              stats: Stats { Vig: vig, Force: force, End: 5, Int: 1, Dex: 5, Luck: luck },
              degats_base: force,
              status : true ,
@@ -37,9 +37,7 @@ impl  Monstre  {
     pub fn attackplayer(&self, cible: &mut Personnage) ->i32{
         let degats = self.stats.Force * 3 ;
 
-        let damagetaken : i32 = (self.stats.Force * 3) * 2;
-
-        cible.hp -= damagetaken ;
+        let damagetaken : i32 = self.stats.Force * 4 ;
         
         damagetaken
         

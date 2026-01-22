@@ -50,6 +50,7 @@ impl Personnage {
         println!("ARME : {:?}", self.arme);
         println!("DÉGÂTS ARME : {}", self.arme.weapondamage());
         println!("NIVEAU : {:?}", self.niveau);
+        println!("XP : {:?} / {:?}", self.xp , self.niveau * 50);
         Color::Green.colortext("-------------------------------");
 
         // On appelle la logique de Stats depuis ici
@@ -70,22 +71,22 @@ impl Personnage {
 
     pub fn attack(&mut self, cible: &mut Monstre) -> i32 {
 
-        let hpmax = cible.stats.Vig * 5 ;
-        let degats = self.stats.Force + self.arme.weapondamage() * 2 ;
-        cible.hp -= degats ;
-
+        let degats = self.stats.Force + self.arme.weapondamage()  ;
+        
         if cible.hp < 0 {
-            cible.hp = 0;
 
             self.xp += cible.xp_give;
-            
-            println!("Le monstre {} est mort" , cible.nom);
-            println!("{} récupère {} xp de {} " , self.nom , cible.xp_give , cible.nom);
 
-            self.checklevelup();
+            println!("{:?} récupère {} xp de {}", self.nom , cible.xp_give , cible.nom);
+            
+            //println!("Le monstre {} est mort" , cible.nom);
+            //println!("{} récupère {} xp de {} " , self.nom , cible.xp_give , cible.nom);
+
+           // self.checklevelup();
         }
 
         degats
+
     
     }
 
@@ -143,9 +144,10 @@ impl Personnage {
      
     pub fn checklevelup(&mut self){
         
-        if self.xp >= self.niveau * 10 {
+        if self.xp >= self.niveau * 50 {
+            println!("Vous avez gagné {} xp  en tuant ce monstre " , self.xp);
             self.niveau += 1;
-            self.xp -= self.niveau * 10;
+            self.xp -= self.niveau * 50;
             println!("✨ LEVEL UP ! {} est maintenant niveau {} !", self.nom, self.niveau);
 
             self.hp = self.hp_max() ;
@@ -156,7 +158,7 @@ impl Personnage {
 
             println!("Tes stats augmentent ! Force: {}, Vie: {}", self.stats.Force, self.hp);
        }else{
-            
+           println!("Vous avez gagné {} xp en tuant ce mob" , self.xp); 
        }
 
 

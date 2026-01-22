@@ -61,32 +61,39 @@ fn main() {
 
     loop {
 
+   
+
+ 
+   
+   
+
     print!(" > ");   
 
     io::stdout().flush().expect("Failed to flush stdout");
-    
+
     
     let mut choix = String::new();
  
     io::stdin()
         .read_line(&mut choix) 
-        .expect("Échec de la lecture"); 
+        .expect("Échec de la lecture");
 
-    let choix = choix.trim();
 
-      let mut room = FightingRoom {
-        joueur : user.clone() ,
-        adversaire : Monstre::monstergenerate(),
-      } ;
+      let choix = choix.trim();   
 
-    FightingRoom::combat( &mut room.joueur , &mut room.adversaire);
+ 
     
     match choix {
         "Fiche" => user.fiche(),
         "continuer" => println!("hello world"),
         "quitter"  => break ,
         "estus" => user.estus(),
-        "help" => println!("hello worldu"),
+        "salle" => {  let mut room = FightingRoom {
+                        adversaire : Monstre::createmonster(),
+                    } ;
+
+                    FightingRoom::combat( &mut room , &mut user)},
+
         "random" => { Monstre::createmonster();
         },
         "feu" => println!("feu"),
