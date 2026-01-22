@@ -32,8 +32,6 @@ The project is currently in early development. The core character creation syste
 ```
 ```
 
-
-```text
 Choose your undead name:
 > Adrien
 Choose your class:
