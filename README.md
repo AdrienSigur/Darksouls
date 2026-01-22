@@ -15,8 +15,10 @@ The project is currently in early development. The core character creation syste
 
 
 
+
+
 ```text
-```
+
 
 ░███████                       ░██            ░██████                         ░██            
 ░██   ░██                      ░██           ░██   ░██                        ░██            
@@ -29,7 +31,6 @@ The project is currently in early development. The core character creation syste
 
 ```
 ```
-
 
 
 ```text
