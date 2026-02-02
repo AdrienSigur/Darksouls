@@ -58,7 +58,7 @@ impl FightingRoom {
 
             joueur.xp += xp;
             
-           joueur.checklevelup();
+           joueur.checklevelup(xp);
             
         }
 

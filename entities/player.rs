@@ -142,12 +142,13 @@ impl Personnage {
 
 
      
-    pub fn checklevelup(&mut self){
+    pub fn checklevelup(&mut self , monsterxp : i32){
         
         if self.xp >= self.niveau * 50 {
-            println!("Vous avez gagné {} xp  en tuant ce monstre " , self.xp);
+            println!("Vous avez gagné {} xp  en tuant ce monstre " , monsterxp);
             self.niveau += 1;
-            self.xp -= self.niveau * 50;
+            
+            self.xp = 0 ;
             println!("✨ LEVEL UP ! {} est maintenant niveau {} !", self.nom, self.niveau);
 
             self.hp = self.hp_max() ;
@@ -158,7 +159,7 @@ impl Personnage {
 
             println!("Tes stats augmentent ! Force: {}, Vie: {}", self.stats.Force, self.hp);
        }else{
-           println!("Vous avez gagné {} xp en tuant ce mob" , self.xp); 
+           println!("Vous avez gagné {} xp en tuant ce mob" , monsterxp ); 
        }
 
 

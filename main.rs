@@ -61,12 +61,6 @@ fn main() {
 
     loop {
 
-   
-
- 
-   
-   
-
     print!(" > ");   
 
     io::stdout().flush().expect("Failed to flush stdout");
@@ -81,25 +75,22 @@ fn main() {
 
       let choix = choix.trim();   
 
- 
-    
-    match choix {
-        "Fiche" => user.fiche(),
-        "continuer" => println!("hello world"),
-        "quitter"  => break ,
-        "estus" => user.estus(),
-        "salle" => {  let mut room = FightingRoom {
-                        adversaire : Monstre::createmonster(),
-                    } ;
+        match choix {
+            "Fiche" => user.fiche(),
+            "continuer" => println!("hello world"),
+            "quitter"  => break ,
+            "estus" => user.estus(),
+            "salle" => {  
+                        let mut room = FightingRoom {
+                            adversaire : Monstre::createmonster(),
+                        };
 
-                    FightingRoom::combat( &mut room , &mut user)},
+                        FightingRoom::combat( &mut room , &mut user)
 
-        "random" => { Monstre::createmonster();
-        },
-        "feu" => println!("feu"),
-        _ => println!("choose something else")
-    };
-    
-
+                        },
+            "feu" => println!("feu"),
+            _ => println!("choose something else")
+        };
     }
+  
 }
